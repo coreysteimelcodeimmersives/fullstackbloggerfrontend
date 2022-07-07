@@ -1,9 +1,97 @@
 import React from "react";
 
-const BlogsPage = ({ blogs }) => {
+const BlogsPage = ({
+  blogs,
+  sortField,
+  setSortField,
+  sortOrder,
+  setSortOrder,
+  filterField,
+  setFilterField,
+  filterValue,
+  setFilterValue,
+  limit,
+  setLimit,
+  page,
+  setPage,
+}) => {
   return (
     <div className="blogs-page">
       <h1>Blogs Page</h1>
+      <label>Sort Field</label>
+      &nbsp;
+      <select
+        value={sortField}
+        onChange={(e) => {
+          const newSortField = e.target.value;
+          setSortField(newSortField);
+        }}
+      >
+        <option value="title">Title</option>
+        <option value="author">Author</option>
+        <option value="createdAt">Created At</option>
+      </select>
+      <br />
+      <label>Sort Order</label>
+      &nbsp;
+      <select
+        value={sortOrder}
+        onChange={(e) => {
+          const newSortOrder = e.target.value;
+          setSortOrder(newSortOrder);
+        }}
+      >
+        <option value="ASC">Asc</option>
+        <option value="DESC">Desc</option>
+      </select>
+      <br />
+      <label>Filter Field</label>
+      &nbsp;
+      <select
+        value={filterField}
+        onChange={(e) => {
+          const newFilterField = e.target.value;
+          setFilterField(newFilterField);
+        }}
+      >
+        <option value="title">Title</option>
+        <option value="author">Author</option>
+      </select>
+      <br />
+      <label>Filter Value</label>
+      <br />
+      <input
+        placeholder="..."
+        value={filterValue}
+        onChange={(e) => {
+          const newFilterValue = e.target.value;
+          setFilterValue(newFilterValue);
+        }}
+      ></input>
+      <br />
+      <label>Limit</label>
+      <br />
+      <input
+        placeholder="Limit"
+        type="number"
+        value={limit}
+        onChange={(e) => {
+          const newLimit = e.target.value;
+          setLimit(newLimit);
+        }}
+      ></input>
+      <br />
+      <label>Page</label>
+      <br />
+      <input
+        placeholder="Page"
+        type="number"
+        value={page}
+        onChange={(e) => {
+          const newPage = e.target.value;
+          setPage(newPage);
+        }}
+      ></input>
       <div>
         {blogs.map((blog) => {
           return <BlogPost blog={blog} key={blog.id} />;
