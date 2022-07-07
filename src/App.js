@@ -7,7 +7,7 @@ import BlogsPage from "./Pages/Blogs";
 const urlEndpoint = "http://localhost:4000";
 
 const App = () => {
-  const [serverJSON, setServerJSON] = useState(null);
+  const [serverJSON, setServerJSON] = useState({ message: [] });
   useEffect(() => {
     const fetchData = async () => {
       const apiResponse = await fetch(`${urlEndpoint}/blogs/all-blogs`);
@@ -20,9 +20,10 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
-        {serverJSON && (
-          <Route path="/blogs" element={<BlogsPage blogs={serverJSON} />} />
-        )}
+        <Route
+          path="/blogs"
+          element={<BlogsPage blogs={serverJSON.message} />}
+        />
       </Routes>
     </div>
   );
