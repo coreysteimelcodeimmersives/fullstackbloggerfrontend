@@ -8,9 +8,9 @@ const urlEndpoint = "http://localhost:4000";
 
 const App = () => {
   const [serverJSON, setServerJSON] = useState({ message: [] });
-  const [sortField, setSortField] = useState("");
+  const [sortField, setSortField] = useState("title");
   const [sortOrder, setSortOrder] = useState("ASC");
-  const [filterField, setFilterField] = useState("");
+  const [filterField, setFilterField] = useState("title");
   const [filterValue, setFilterValue] = useState("");
   const [limit, setLimit] = useState(Number(10));
   const [page, setPage] = useState(Number(1));
@@ -18,7 +18,6 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       const url = `${urlEndpoint}/blogs/all-blogs?sortField=${sortField}&sortOrder=${sortOrder}&filterField=${filterField}&filterValue=${filterValue}&limit=${limit}&page=${page}`;
-      console.log(url);
       const apiResponse = await fetch(url);
       const apiJSON = await apiResponse.json();
       setServerJSON(apiJSON);

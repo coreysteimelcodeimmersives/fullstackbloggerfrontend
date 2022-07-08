@@ -30,6 +30,7 @@ const BlogsPage = ({
         <option value="title">Title</option>
         <option value="author">Author</option>
         <option value="createdAt">Created At</option>
+        <option value="id">Id</option>
       </select>
       <br />
       <label>Sort Order</label>
@@ -75,6 +76,7 @@ const BlogsPage = ({
         placeholder="Limit"
         type="number"
         value={limit}
+        min="1"
         onChange={(e) => {
           const newLimit = e.target.value;
           setLimit(newLimit);
@@ -86,6 +88,7 @@ const BlogsPage = ({
       <input
         placeholder="Page"
         type="number"
+        min="1"
         value={page}
         onChange={(e) => {
           const newPage = e.target.value;
@@ -104,6 +107,8 @@ const BlogsPage = ({
 const BlogPost = ({ blog }) => {
   return (
     <div className="blogPost">
+      <br />
+      <text>Id: {blog.id}</text>
       <h2>Title: {blog.title}</h2>
       <br />
       <h3>Author: {blog.author}</h3>
