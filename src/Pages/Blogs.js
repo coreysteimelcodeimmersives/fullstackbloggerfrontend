@@ -108,7 +108,7 @@ const BlogPost = ({ blog }) => {
   return (
     <div className="blogPost">
       <br />
-      <text>Id: {blog.id}</text>
+      <p>Id: {blog.id}</p>
       <h2>Title: {blog.title}</h2>
       <br />
       <h3>Author: {blog.author}</h3>
