@@ -2,15 +2,17 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const PostBlogPage = ({ blogSubmit }) => {
+const PostBlogPage = ({ blogSubmit, setIsFetching }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
   const [text, setText] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
   return (
     <div>
-      <div>PostBlogPage</div>
+      <div>Post Blog Page</div>
       <br></br>
       <label>Title</label>
       <br></br>
@@ -57,21 +59,65 @@ const PostBlogPage = ({ blogSubmit }) => {
       ></textarea>
       <br />
       <button
-        onClick={
-          ("click",
-          () => {
-            blogSubmit({
+        onClick={async () => {
+          if (!title || !author || !category || !text) {
+            const missingTitle = title ? (
+              ""
+            ) : (
+              <div>
+                <br /> - Title
+              </div>
+            );
+            const missingAuthor = author ? (
+              ""
+            ) : (
+              <div>
+                <br /> - Author
+              </div>
+            );
+            const missingCategory = category ? (
+              ""
+            ) : (
+              <div>
+                <br /> - Category
+              </div>
+            );
+            const missingText = text ? (
+              ""
+            ) : (
+              <div>
+                <br /> - Text
+              </div>
+            );
+            const newMissingMessage = (
+              <div>
+                To submit a blog please include:
+                {missingTitle}
+                {missingAuthor}
+                {missingCategory}
+                {missingText}
+              </div>
+            );
+            setMessage(newMissingMessage);
+          } else {
+            setIsFetching(true);
+            const { success, message } = await blogSubmit({
               title: title,
               author: author,
               category: category,
               text: text,
             });
-            navigate("/");
-          })
-        }
+            setIsFetching(false);
+            setMessage(message);
+            if (success === true) {
+              navigate("/");
+            }
+          }
+        }}
       >
         Submit
       </button>
+      <div>{message}</div>
     </div>
   );
 };
