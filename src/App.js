@@ -18,6 +18,7 @@ const App = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const blogSubmit = async (blog) => {
+    setIsFetching(true);
     const url = `${urlEndpoint}/blogs/blog-submit`;
     const response = await fetch(url, {
       method: "POST",
@@ -27,7 +28,7 @@ const App = () => {
       body: JSON.stringify(blog),
     });
     const responseJSON = await response.json();
-    // const data = JSON.parse(JSON.stringify(responseJSON));
+    setIsFetching(false);
     return responseJSON;
   };
 
@@ -66,12 +67,7 @@ const App = () => {
         ></Route>
         <Route
           path="/post-blog"
-          element={
-            <PostBlogPage
-              blogSubmit={blogSubmit}
-              setIsFetching={setIsFetching}
-            />
-          }
+          element={<PostBlogPage blogSubmit={blogSubmit} />}
         />
       </Routes>
     </div>

@@ -2,12 +2,14 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const PostBlogPage = ({ blogSubmit, setIsFetching }) => {
+import validateBlog from "../Utils/Validation";
+
+const PostBlogPage = ({ blogSubmit }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
   const [text, setText] = useState("");
-  const [message, setMessage] = useState("");
+  const [resMssg, setResMssg] = useState("");
   const navigate = useNavigate();
 
   return (
@@ -60,55 +62,23 @@ const PostBlogPage = ({ blogSubmit, setIsFetching }) => {
       <br />
       <button
         onClick={async () => {
-          if (!title || !author || !category || !text) {
-            const missingTitle = title ? (
-              ""
-            ) : (
-              <div>
-                <br /> - Title
-              </div>
-            );
-            const missingAuthor = author ? (
-              ""
-            ) : (
-              <div>
-                <br /> - Author
-              </div>
-            );
-            const missingCategory = category ? (
-              ""
-            ) : (
-              <div>
-                <br /> - Category
-              </div>
-            );
-            const missingText = text ? (
-              ""
-            ) : (
-              <div>
-                <br /> - Text
-              </div>
-            );
-            const newMissingMessage = (
-              <div>
-                To submit a blog please include:
-                {missingTitle}
-                {missingAuthor}
-                {missingCategory}
-                {missingText}
-              </div>
-            );
-            setMessage(newMissingMessage);
-          } else {
-            setIsFetching(true);
+          const validateBlogObj = validateBlog({
+            title: title,
+            author: author,
+            category: category,
+            text: text,
+          });
+          if (validateBlogObj.isValid === false) {
+            setResMssg(validateBlogObj.mssg);
+          }
+          if (validateBlogObj.isValid === true) {
             const { success, message } = await blogSubmit({
               title: title,
               author: author,
               category: category,
               text: text,
             });
-            setIsFetching(false);
-            setMessage(message);
+            setResMssg(message);
             if (success === true) {
               navigate("/");
             }
@@ -117,7 +87,7 @@ const PostBlogPage = ({ blogSubmit, setIsFetching }) => {
       >
         Submit
       </button>
-      <div>{message}</div>
+      <div>{resMssg}</div>
     </div>
   );
 };
