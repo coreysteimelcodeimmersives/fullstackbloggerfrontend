@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.blogPost {
+  margin: 25px;
+  outline: 2px solid grey;
+  padding: 15px;
+}
