@@ -20,6 +20,13 @@ const App = () => {
   const [adminBlogList, setAdminBlogList] = useState({ message: [] });
   const [adminBlogsLoading, setAdminBlogsLoading] = useState(false);
 
+  const fetchSingleBlog = async (blogId) => {
+    const url = `${urlEndpoint}/blogs/single-blog/${blogId}`;
+    const response = await fetch(url);
+    const responseJSON = await response.json();
+    return responseJSON.message;
+  };
+
   const blogSubmit = async (blog) => {
     setIsFetching(true);
     const url = `${urlEndpoint}/blogs/blog-submit`;
@@ -98,6 +105,9 @@ const App = () => {
             <BlogManager
               adminBlogList={adminBlogList.message}
               deleteBlog={deleteBlog}
+              fetchSingleBlog={fetchSingleBlog}
+              urlEndpoint={urlEndpoint}
+              setAdminBlogsLoading={setAdminBlogsLoading}
             />
           }
         />

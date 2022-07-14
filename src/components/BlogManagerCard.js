@@ -1,6 +1,6 @@
 import React from "react";
 
-const BlogManagerCard = ({ blog, deleteBlog }) => {
+const BlogManagerCard = ({ blog, deleteBlog, fetchBlogAndShow }) => {
   return (
     <div className="blogPost">
       <p>Id: {blog.id}</p>
@@ -20,6 +20,13 @@ const BlogManagerCard = ({ blog, deleteBlog }) => {
         }}
       >
         Delete
+      </button>
+      <button
+        onClick={async () => {
+          await fetchBlogAndShow();
+        }}
+      >
+        Edit
       </button>
     </div>
   );
